@@ -271,3 +271,63 @@ java 是一门面向对象的语言，所有的代码都写在class(类)里。
 这是一个public static修饰的方法，所以他是一个静态的方法。返回值是void类型，也就是无返回值。方法名是main。参数是String数组。
 
 当运行程序的时候，通常都是以main方法作为起点，以main方法中的第一条语句作为程序的第一条语句。由于main方法是一个静态的方法，所以该方法放在任何一个类中都是可以执行的(剪切粘贴到哪里都可以。。)
+
+而各个类，通过功能的不同，可以分为不同的功能包，Model，View，Control，Model是模型，也就是存放各种数据类型，封装成各个类，cat,dog。View视图层，Control控制层，也就是来控制各种逻辑代码！
+
+## 作用域
+
+### public
+
+定义为`public`的`class`、`interface`可以被其他任何类访问：
+
+```java
+package abc;
+
+public class Hello {
+    public void hi() {
+    }
+}
+```
+
+定义为`public`的`field`、`method`可以被其他类访问，前提是首先有访问`class`的权限：
+
+```java
+package abc;
+
+public class Hello {
+    public void hi() {
+    }
+}
+```
+
+上面的`hi()`方法是`public`，可以被其他类调用，前提是首先要能访问`Hello`类：
+
+```java
+package xyz;
+
+class Main {
+    void foo() {
+        Hello h = new Hello();
+        h.hi();
+    }
+}
+```
+
+定义为`private`的`field`、`method`不能被其他类访问，只能是内部私有的。
+
+实际上，确切地说，`private`访问权限被限定在`class`的内部，而且与方法声明顺序*无关*。推荐把`private`方法放到后面，因为`public`方法定义了类对外提供的功能，阅读代码的时候，应该先关注`public`方法：
+
+```
+package abc;
+
+public class Hello {
+    public void hello() {
+        this.hi();
+    }
+
+    private void hi() {
+    }
+}
+```
+
+由于Java支持嵌套类，如果一个类内部还定义了嵌套类，那么，嵌套类拥有访问`private`的权限：（只有在这一种情况下，private才能修饰内部类）
